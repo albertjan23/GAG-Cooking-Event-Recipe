@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAG Cooking Recipe Database - Complete Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        prismatic: '#FF00FF',
+                        divine: '#FFD700',
+                        mythical: '#FF4500',
+                        legendary: '#FFA500',
+                        rare: '#0080FF',
+                        uncommon: '#00FF00',
+                        normal: '#808080'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-green-50 via-emerald-50 to-lime-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-green-800 to-emerald-700 text-white py-16 shadow-xl">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 tracking-tight">
+                🍳 GAG RECIPE DATABASE
+                <span class="block text-3xl md:text-4xl font-light text-green-200 mt-2">Complete Cooking Guide</span>
+            </h1>
+            <p class="text-xl text-green-100 max-w-3xl mx-auto">Master every recipe from Soup to Cake with our comprehensive ingredient guide</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Search and Filter Controls -->
+        <div class="bg-white rounded-3xl shadow-xl p-6 mb-8">
+            <div class="flex flex-wrap gap-4 items-center justify-between">
+                <div class="flex-1 min-w-64">
+                    <input type="text" id="searchInput" placeholder="Search recipes or ingredients..." 
+                           class="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:border-green-500 focus:outline-none text-lg">
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterByRarity('all')" class="rarity-btn active px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-gray-600 text-white">All</button>
+                    <button onclick="filterByRarity('prismatic')" class="rarity-btn px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-purple-600 text-white">Prismatic</button>
+                    <button onclick="filterByRarity('divine')" class="rarity-btn px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-yellow-500 text-white">Divine</button>
+                    <button onclick="filterByRarity('mythical')" class="rarity-btn px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-red-500 text-white">Mythical</button>
+                    <button onclick="filterByRarity('legendary')" class="rarity-btn px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-orange-500 text-white">Legendary</button>
+                    <button onclick="filterByRarity('rare')" class="rarity-btn px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-blue-500 text-white">Rare</button>
+                    <button onclick="filterByRarity('uncommon')" class="rarity-btn px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-green-500 text-white">Uncommon</button>
+                    <button onclick="filterByRarity('normal')" class="rarity-btn px-4 py-2 rounded-full font-semibold transition-all duration-300 bg-gray-500 text-white">Normal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recipe Grid -->
+        <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8" id="recipeGrid">
+            
+            <!-- Soup Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-gray-500" data-food="soup" data-rarity="normal">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🍲</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Soup</h3>
+                            <span class="inline-block px-3 py-1 bg-gray-500 text-white text-sm rounded-full font-semibold">Any Rarity</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <h4 class="font-bold mb-2 text-gray-700">Ingredients:</h4>
+                        <p class="text-sm text-gray-600">Any single ingredient (if not used for another recipe)</p>
+                        <div class="mt-2 text-xs bg-gray-100 p-2 rounded">
+                            <strong>Example:</strong> 1× Carrot
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Salad Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-purple-600" data-food="salad" data-rarity="prismatic">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🥗</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Salad</h3>
+                            <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full font-semibold">Prismatic</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-purple-700">Prismatic Recipe:</h4>
+                            <p class="text-sm">1× Tomato + 4× Bone Blossom</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-yellow-700">Divine Recipes:</h4>
+                            <p class="text-sm mb-1">• 4× Beanstalk + 1× Tomato</p>
+                            <p class="text-sm">• 2× Bone Blossom + 1× Pineapple + 1× Pepper + 1× Tomato</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-red-700">Mythical Recipes:</h4>
+                            <p class="text-sm mb-1">• 1× Tomato + 1× Giant Pinecone</p>
+                            <p class="text-sm">• 2× Sugar Apple + 1× Pepper + 1× Tomato</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-orange-700">Legendary Recipes:</h4>
+                            <p class="text-sm mb-1">• 2× Blood Banana + 2× Tomato</p>
+                            <p class="text-sm">• 1× Bamboo + 1× Mango + 1× Pineapple + 1× Tomato + 1× Beanstalk</p>
+                        </div>
+                        <div class="bg-blue-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-blue-700">Rare Recipe:</h4>
+                            <p class="text-sm">5× Tomato</p>
+                        </div>
+                        <div class="bg-green-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-green-700">Uncommon Recipe:</h4>
+                            <p class="text-sm">2× Tomato</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sandwich Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-purple-600" data-food="sandwich" data-rarity="prismatic">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🥪</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Sandwich</h3>
+                            <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full font-semibold">Prismatic</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-purple-700">Prismatic Recipe:</h4>
+                            <p class="text-sm">1× Tomato + 1× Banana + 3× Bone Blossom</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-yellow-700">Divine Recipe:</h4>
+                            <p class="text-sm">3× Bone Blossom + 1× Tomato + 1× Corn</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-red-700">Mythical Recipe:</h4>
+                            <p class="text-sm">2× Giant Pinecone + 1× Tomato + 1× Corn</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-orange-700">Legendary Recipes:</h4>
+                            <p class="text-sm mb-1">• 1× Cacao + 1× Tomato + 1× Corn</p>
+                            <p class="text-sm">• 1× Tomato + 1× Corn + 1× Elder Strawberry</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-gray-700">Normal Recipe:</h4>
+                            <p class="text-sm">2× Tomato + 1× Corn</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pie Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-purple-600" data-food="pie" data-rarity="prismatic">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🥧</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Pie</h3>
+                            <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full font-semibold">Prismatic</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-purple-700">Prismatic Recipes:</h4>
+                            <p class="text-sm mb-1">• 1× Pumpkin + 4× Bone Blossom</p>
+                            <p class="text-sm">• 1× Coconut + 2× Bone Blossom</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-yellow-700">Divine Recipes:</h4>
+                            <p class="text-sm mb-1">• 1× Coconut + 1× Beanstalk</p>
+                            <p class="text-sm mb-1">• 1× Coconut + 1× Pepper + 2× Elder Strawberry + 1× Celestiberry</p>
+                            <p class="text-sm">• 3× Sugar Apple + 1× Pumpkin</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-red-700">Mythical Recipe:</h4>
+                            <p class="text-sm">1× Apple + 1× Pumpkin</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-orange-700">Legendary Recipe:</h4>
+                            <p class="text-sm">1× Corn + 1× Coconut</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-gray-700">Normal Recipe:</h4>
+                            <p class="text-sm">1× Corn + 1× Pumpkin</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Waffle Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-purple-600" data-food="waffle" data-rarity="prismatic">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🧇</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Waffle</h3>
+                            <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full font-semibold">Prismatic</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-purple-700">Prismatic Recipe:</h4>
+                            <p class="text-sm">3× Bone Blossom + 1× Sugar Apple + 1× Coconut</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-yellow-700">Divine Recipe:</h4>
+                            <p class="text-sm">1× Sugar Apple + 1× Coconut</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-red-700">Mythical Recipes:</h4>
+                            <p class="text-sm mb-1">• 1× Tranquil Bloom + 1× Starfruit + 1× Coconut</p>
+                            <p class="text-sm">• 1× Grape + 1× Coconut + 1× Dragon Fruit + 1× Cactus + 1× Peach</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-orange-700">Legendary Recipe:</h4>
+                            <p class="text-sm">1× Sugar Apple + 1× Watermelon + 1× Corn + 1× Sugarglaze</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-gray-700">Normal Recipe:</h4>
+                            <p class="text-sm">1× Strawberry + 1× Coconut</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hot Dog Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-purple-600" data-food="hotdog" data-rarity="prismatic">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🌭</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Hot Dog</h3>
+                            <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full font-semibold">Prismatic</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-purple-700">Prismatic Recipes:</h4>
+                            <p class="text-sm mb-1">• 1× Corn + 4× Bone Blossom</p>
+                            <p class="text-sm">• 1× Violet Corn + 4× Bone Blossom</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-yellow-700">Divine Recipes:</h4>
+                            <p class="text-sm mb-1">• 1× Corn + 4× Ember Lily</p>
+                            <p class="text-sm mb-1">• 2× Bone Blossom + 2× Beanstalk + 1× Corn</p>
+                            <p class="text-sm">• 3× Bone Blossom + 1× Violet Corn + 1× Lucky Bamboo</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-red-700">Mythical Recipe:</h4>
+                            <p class="text-sm">1× Ember Lily + 1× Corn</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-orange-700">Legendary Recipe:</h4>
+                            <p class="text-sm">1× Pepper + 1× Corn</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-gray-700">Normal Recipe:</h4>
+                            <p class="text-sm">1× Banana + 1× Pepper</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ice Cream Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-purple-600" data-food="icecream" data-rarity="prismatic">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🍦</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Ice Cream</h3>
+                            <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full font-semibold">Prismatic</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-purple-700">Prismatic Recipe:</h4>
+                            <p class="text-sm">1× Sugarglaze + 1× Sugar Apple + 3× Bone Blossom</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-yellow-700">Divine Recipes:</h4>
+                            <p class="text-sm mb-1">• 3× Sugar Apple + 1× Corn</p>
+                            <p class="text-sm">• 1× Tomato + 1× Bone Blossom + 1× Sugar Apple</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-red-700">Mythical Recipe:</h4>
+                            <p class="text-sm">1× Banana + 1× Sugar Apple</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-orange-700">Legendary Recipes:</h4>
+                            <p class="text-sm mb-1">• 2× Banana</p>
+                            <p class="text-sm">• 1× Pineapple + 1× Corn</p>
+                        </div>
+                        <div class="bg-green-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-green-700">Uncommon Recipes:</h4>
+                            <p class="text-sm mb-1">• 1× Blueberry + 1× Corn</p>
+                            <p class="text-sm">• 1× Strawberry + 1× Corn</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donut Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-purple-600" data-food="donut" data-rarity="prismatic">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🍩</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Donut</h3>
+                            <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full font-semibold">Prismatic</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-purple-700">Prismatic Recipe:</h4>
+                            <p class="text-sm">1× Sugarglaze + 4× Bone Blossom</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-yellow-700">Divine Recipe:</h4>
+                            <p class="text-sm">1× Bone Blossom + 1× Sugar Apple + 1× Banana</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-red-700">Mythical Recipe:</h4>
+                            <p class="text-sm">1× Sugar Apple + 2× Corn</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-orange-700">Legendary Recipe:</h4>
+                            <p class="text-sm">1× Blood Banana + 1× Moon Melon</p>
+                        </div>
+                        <div class="bg-green-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-green-700">Uncommon Recipes:</h4>
+                            <p class="text-sm mb-1">• 2× Corn + 1× Spiked Mango</p>
+                            <p class="text-sm">• 1× Corn + 1× Blueberry + 1× Strawberry</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pizza Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-purple-600" data-food="pizza" data-rarity="prismatic">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🍕</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Pizza</h3>
+                            <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full font-semibold">Prismatic</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-purple-700">Prismatic Recipe:</h4>
+                            <p class="text-sm">1× Beanstalk + 1× Banana + 3× Bone Blossom</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-yellow-700">Divine Recipe:</h4>
+                            <p class="text-sm">1× Sugar Apple + 1× Bone Blossom + 1× Corn</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-red-700">Mythical Recipes:</h4>
+                            <p class="text-sm mb-1">• 1× Tomato + 1× Corn + 1× Pepper + 2× Sugar Apple</p>
+                            <p class="text-sm">• 1× Giant Pinecone + 1× Corn + 1× Apple + 1× Mushroom + 1× Pepper</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-orange-700">Legendary Recipes:</h4>
+                            <p class="text-sm mb-1">• 2× Corn + 2× Apple + 1× Pepper</p>
+                            <p class="text-sm">• 1× Cactus + 1× Corn + 1× Coconut</p>
+                        </div>
+                        <div class="bg-blue-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-blue-700">Rare Recipe:</h4>
+                            <p class="text-sm">1× Banana + 1× Tomato</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sushi Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-yellow-500" data-food="sushi" data-rarity="divine">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🍣</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Sushi</h3>
+                            <span class="inline-block px-3 py-1 bg-yellow-500 text-white text-sm rounded-full font-semibold">Divine</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-purple-700">Prismatic Recipe:</h4>
+                            <p class="text-sm text-gray-500 italic">To be added</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-yellow-700">Divine Recipe:</h4>
+                            <p class="text-sm">3× Bone Blossom + 1× Bamboo + 1× Corn</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-red-700">Mythical Recipes:</h4>
+                            <p class="text-sm mb-1">• 3× Sugar Apple + 1× Bamboo + 1× Corn</p>
+                            <p class="text-sm">• 2× Bamboo + 2× Bone Blossom + 1× Corn</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-orange-700">Legendary Recipe:</h4>
+                            <p class="text-sm">1× Pepper + 1× Coconut + 1× Bamboo + 1× Corn</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-gray-700">Normal Recipe:</h4>
+                            <p class="text-sm">4× Bamboo + 1× Corn</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Burger Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-purple-600" data-food="burger" data-rarity="prismatic">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🍔</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Burger</h3>
+                            <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full font-semibold">Prismatic</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-purple-700">Prismatic Recipe:</h4>
+                            <p class="text-sm">1× Sugarglaze + 1× Grand Tomato + 3× Bone Blossom</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-yellow-700">Divine Recipes:</h4>
+                            <p class="text-sm mb-1">• 3× Bone Blossom + 1× Corn + 1× Tomato</p>
+                            <p class="text-sm">• 1× Violet Corn + 1× Tomato + 3× Bone Blossom</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-red-700">Mythical Recipe:</h4>
+                            <p class="text-sm">1× Pepper + 1× Corn + 1× Tomato + 1× Bone Blossom + 1× Beanstalk</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-orange-700">Legendary Recipe:</h4>
+                            <p class="text-sm">1× Pepper + 1× Corn + 1× Tomato</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cake Recipes -->
+            <div class="recipe-card bg-white rounded-3xl shadow-xl overflow-hidden border-l-8 border-purple-600" data-food="cake" data-rarity="prismatic">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="text-5xl mr-4">🎂</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Cake</h3>
+                            <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full font-semibold">Prismatic</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-purple-700">Prismatic Recipe:</h4>
+                            <p class="text-sm">3× Bone Blossom + 1× Sugar Apple + 1× Banana</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-yellow-700">Divine Recipes:</h4>
+                            <p class="text-sm mb-1">• 1× Banana + 1× Kiwi + 3× Bone Blossom</p>
+                            <p class="text-sm mb-1">• 4× Sugar Apple + 1× Corn</p>
+                            <p class="text-sm">• 4× Elder Strawberry + 1× Corn</p>
+                        </div>
+                        <div class="bg-red-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-red-700">Mythical Recipe:</h4>
+                            <p class="text-sm">2× Sugar Apple + 2× Corn</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-orange-700">Legendary Recipe:</h4>
+                            <p class="text-sm">2× Kiwi + 2× Banana</p>
+                        </div>
+                        <div class="bg-blue-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-blue-700">Rare Recipes:</h4>
+                            <p class="text-sm mb-1">• 1× Blueberry + 1× Grape + 1× Apple + 1× Corn</p>
+                            <p class="text-sm mb-1">• 2× Banana + 2× Strawberry + 1× Pumpkin</p>
+                            <p class="text-sm">• 1× Ember Lily + 2× Peach</p>
+                        </div>
+                        <div class="bg-green-50 rounded-xl p-4">
+                            <h4 class="font-bold mb-2 text-green-700">Uncommon Recipes:</h4>
+                            <p class="text-sm mb-1">• 2× Corn + 2× Strawberry</p>
+                            <p class="text-sm mb-1">• 2× Blueberry + 1× Corn + 1× Tomato</p>
+                            <p class="text-sm mb-1">• 2× Corn + 2× Watermelon</p>
+                            <p class="text-sm">• 1× Pumpkin + 1× Giant Pinecone + 1× Corn + 1× Apple</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="mt-12 bg-white rounded-3xl shadow-xl p-8">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">📊 Recipe Statistics</h2>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">8</div>
+                    <div class="text-gray-600">Prismatic Recipes</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-yellow-500 mb-2">12</div>
+                    <div class="text-gray-600">Divine Recipes</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-red-500 mb-2">15</div>
+                    <div class="text-gray-600">Mythical Recipes</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-orange-500 mb-2">18</div>
+                    <div class="text-gray-600">Legendary Recipes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white py-12 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-3xl font-bold mb-4">🍳 Master Every Recipe!</h3>
+            <p class="text-green-200 mb-6">Use this comprehensive database to create the perfect dishes for your GAG cooking adventures</p>
+            <div class="flex justify-center space-x-4">
+                <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300">
+                    📋 Save Favorites
+                </button>
+                <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300">
+                    🔄 Shuffle Recipes
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const recipeCards = document.querySelectorAll('.recipe-card');
+            
+            recipeCards.forEach(card => {
+                const foodName = card.getAttribute('data-food');
+                const cardText = card.textContent.toLowerCase();
+                
+                if (cardText.includes(searchTerm) || foodName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Rarity filter functionality
+        function filterByRarity(rarity) {
+            const recipeCards = document.querySelectorAll('.recipe-card');
+            const buttons = document.querySelectorAll('.rarity-btn');
+            
+            // Update active button
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'ring-4', 'ring-white');
+            });
+            event.target.classList.add('active', 'ring-4', 'ring-white');
+            
+            // Filter cards
+            recipeCards.forEach(card => {
+                if (rarity === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    const cardRarity = card.getAttribute('data-rarity');
+                    if (cardRarity === rarity) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add hover effects to recipe cards
+        document.querySelectorAll('.recipe-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.1)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)';
+            });
+        });
+
+        // Initialize with all recipes visible
+        document.addEventListener('DOMContentLoaded', function() {
+            filterByRarity('all');
+        });
+    </script>
+
+    <style>
+        .recipe-card {
+            transition: all 0.3s ease;
+        }
+        
+        .rarity-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .rarity-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .rarity-btn.active {
+            transform: scale(1.1);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #059669;
+        }
+    </style>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b8f4429440fec7',t:'MTc1NDU5MjU2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
